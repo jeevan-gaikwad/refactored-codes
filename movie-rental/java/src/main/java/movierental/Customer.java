@@ -16,54 +16,33 @@ public class Customer {
     }
 
     public void addRental(Rental arg) {
+        _rentals.add(arg);
         _totalAmount += arg.calculateRent();
         _frequentRenterPoints += arg.calculateFrequentRenterPoints();
-        _rentals.add(arg);
-
     }
 
     public String getName() {
         return _name;
     }
 
+    public double getTotalAmount() {
+        return _totalAmount;
+    }
+
+    public int getFrequentRenterPoints() {
+        return _frequentRenterPoints;
+    }
+
+    public List<Rental> getRentals() {
+        return _rentals;
+    }
+
     public String statement() {
-        return header()+ body()+ footer();
+        return new ConsoleStatement().statement(this);
     }
-
-    private String footer() {
-        return "Amount owed is " + _totalAmount + "\n"
-                +"You earned " + _frequentRenterPoints + " frequent renter points";
-    }
-
-    private String body() {
-        String result="";
-        for(Rental each:_rentals)
-            result += "\t" + each.getMovie().getTitle() + "\t" + each.calculateRent() + "\n";
-        return result;
-    }
-
-    private String header() {
-        return "Rental Record for " + _name + "\n";
-    }
-
 
     public String htmlStatement() {
-        return htmlHeader() + htmlBody() + htmlFooter();
+        return new HTMLStatement().statement(this);
     }
 
-    private String htmlFooter() {
-        return  "<b>Amount owed is "+ _totalAmount +"\n<br>" +
-                "You earned "+ _frequentRenterPoints +" frequent renter points</b>";
-    }
-
-    private String htmlBody() {
-        String result="";
-        for(Rental each:_rentals)
-            result+="\t" + each.getMovie().getTitle() + "\t" + each.calculateRent() + "\n<br>";
-        return result;
-    }
-
-    private String htmlHeader() {
-        return "<h1>Rental Record for "+_name+"</h1>\n";
-    }
 }
