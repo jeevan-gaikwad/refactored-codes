@@ -12,6 +12,7 @@ public class NewReleaseMoviePrice extends MoviePrice{
         return daysRented * BASE_FARE;
     }
 
+    @Override
     public int frequentRenterPoints(int daysRented) {
         return (daysRented>1) ? (super.frequentRenterPoints(daysRented) + EXTRA_POINTS) : super.frequentRenterPoints(daysRented);
     }

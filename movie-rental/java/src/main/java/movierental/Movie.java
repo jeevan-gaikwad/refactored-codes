@@ -5,14 +5,14 @@ public class Movie {
     public static final int CHILDRENS = 2;
     public static final int NEW_RELEASE = 1;
     public static final int REGULAR = 0;
+    public static final int BLURAY = 3;
 
     private String _title;
-
-    private MoviePrice moviePrice;
+    private MoviePrice _moviePrice;
 
     public Movie(String title, int priceCode) {
         _title = title;
-        moviePrice=createMoviePrice(priceCode);
+        _moviePrice =createMoviePrice(priceCode);
     }
 
     public String getTitle() {
@@ -20,7 +20,7 @@ public class Movie {
     }
 
     public double calculateAmount(int daysRented) {
-        return moviePrice.amount(daysRented);
+        return _moviePrice.amount(daysRented);
     }
 
     private MoviePrice createMoviePrice(int priceCode) {
@@ -31,11 +31,14 @@ public class Movie {
                 return new ChildrenMoviePrice();
             case NEW_RELEASE:
                 return new NewReleaseMoviePrice();
+            case BLURAY:
+                return new BluRayMoviePrice();
+            default:
+                throw new InvalidMoviePriceCodeException("Invalid price code was passed to the createMoviePrice");
         }
-        return null;
     }
 
     public int calculateFreqRenterPoints(int daysRented) {
-        return moviePrice.frequentRenterPoints(daysRented);
+        return _moviePrice.frequentRenterPoints(daysRented);
     }
 }

@@ -51,4 +51,25 @@ public class CustomerTest {
                     "You earned 4 frequent renter points</b>", htmlOutput);
     }
 
+    @Test
+    public void bluRayMovieStatement(){
+
+        Movie baahubaliMovie = new Movie("Baahubali", Movie.BLURAY);
+        Rental baahubaliRental = new Rental(baahubaliMovie, 3);
+        cust1.addRental(baahubaliRental);
+
+        assertEquals("Rental Record for Jeevan\n" +
+                        "\tJab we met\t12.0\n" +
+                        "\tOm Shanti Om\t3.5\n" +
+                        "\tBal Ganesh\t3.0\n" +
+                        "\tBaahubali\t12.0\n"+
+                        "Amount owed is 30.5\n" +
+                        "You earned 7 frequent renter points", cust1.statement());
+    }
+
+    @Test(expected = MovieRentalClientException.class)
+    public void invalidMoviePriceCode(){
+        Movie baahubaliMovie = new Movie("My movie", 5);
+    }
+
 }
